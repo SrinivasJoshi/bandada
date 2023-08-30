@@ -25,7 +25,7 @@ import {
     isGroupMember
 } from "../utils/api"
 
-const injectedConnector = new InjectedConnector({})
+const injectedConnector = new InjectedConnector({ supportedChainIds: [5] })
 
 export default function HomePage(): JSX.Element {
     const [_inviteCode, setInviteCode] = useState<string>("")
@@ -141,6 +141,11 @@ export default function HomePage(): JSX.Element {
         [account, library]
     )
 
+    // Define the error handling function
+    const handleError = (error: Error) => {
+        console.error("Error during activation:", error)
+    }
+
     return (
         <Container maxW="container.md" pt="20" pb="20" px="8" centerContent>
             <VStack spacing="20" pb="30px" w="100%">
@@ -184,7 +189,7 @@ export default function HomePage(): JSX.Element {
                     <Button
                         colorScheme="secondary"
                         variant="solid"
-                        onClick={() => activate(injectedConnector)}
+                        onClick={() => activate(injectedConnector, handleError)}
                     >
                         Connect Metamask
                     </Button>
